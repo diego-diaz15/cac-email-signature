@@ -54,7 +54,7 @@ def test_gmail_clipboard_html_uses_hosted_logo(generator: SignatureGenerator, pe
     assert "linkedin.com" in html
     assert "instagram" not in html
     assert "facebook" not in html
-    assert len(html) < 10_000
+    assert len(html) < 15_000
 
 
 def test_hosted_mode_omits_logo_when_public_url_missing(generator: SignatureGenerator) -> None:

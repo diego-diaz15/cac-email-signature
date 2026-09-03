@@ -266,33 +266,14 @@
     }
 
     const ICONS = {
-      phone: makeIconDataUri((ctx) => {
-        ctx.beginPath();
-        ctx.roundRect(10, 2, 12, 28, 3);
-        ctx.stroke();
-        ctx.fillRect(13, 5, 6, 2);
-      }),
+      phone: "data:image/png;base64,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",
+      web: "data:image/png;base64,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",
       email: makeIconDataUri((ctx) => {
         ctx.beginPath();
         ctx.roundRect(4, 8, 24, 16, 2);
         ctx.stroke();
         ctx.beginPath();
         ctx.moveTo(4, 10); ctx.lineTo(16, 18); ctx.lineTo(28, 10);
-        ctx.stroke();
-      }),
-      web: makeIconDataUri((ctx) => {
-        ctx.beginPath();
-        ctx.arc(16, 16, 11, 0, Math.PI * 2);
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.arc(16, 16, 11, 0, Math.PI * 2);
-        ctx.save();
-        ctx.scale(0.5, 1);
-        ctx.arc(32, 16, 11, 0, Math.PI * 2);
-        ctx.restore();
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.moveTo(5, 16); ctx.lineTo(27, 16);
         ctx.stroke();
       }),
       linkedin: makeIconDataUri((ctx) => {
@@ -359,17 +340,15 @@
       const C = BRAND.colors;
       const F = BRAND.font;
 
-      // Nombre
-      const nameDiv = name ? `<div style="font-family:${F};font-size:15px;line-height:20px;font-weight:bold;color:${C.text};">${esc(name)}</div>` : "";
-      // Cargo
-      const titleDiv = title ? `<div style="font-family:${F};font-size:15px;line-height:20px;font-weight:bold;color:${C.text};padding-top:1px;">${esc(title)}</div>` : "";
-      // Departamento
+      // Nombre y cargo: mismo peso/tamaño que "Soporte Técnico" en la firma original
+      const nameDiv = name ? `<div style="font-family:${F};font-size:16px;line-height:20px;font-weight:bold;color:#000000;">${esc(name)}</div>` : "";
+      const titleDiv = title ? `<div style="font-family:${F};font-size:16px;line-height:20px;font-weight:bold;color:#000000;padding-top:1px;">${esc(title)}</div>` : "";
       const deptDiv = department ? `<div style="font-family:${F};font-size:12px;line-height:16px;color:${C.muted};">${esc(department)}</div>` : "";
 
-      // Filas de contacto
-      const phoneRow = phone ? contactRow("phone", `<a href="${esc(tel(phone))}" style="color:${C.text};text-decoration:none;">${esc(phone)}</a>`) : "";
-      const emailRow = email ? contactRow("email", `<a href="mailto:${esc(email)}" style="color:${C.link};text-decoration:none;">${esc(email)}</a>`) : "";
-      const webRow = contactRow("web", `<a href="${esc(websiteUrl)}" target="_blank" style="color:${C.link};text-decoration:none;">${esc(websiteLabel)}</a>`);
+      // Contacto en negro regular, como en la firma de referencia
+      const phoneRow = phone ? contactRow("phone", `<a href="${esc(tel(phone))}" style="color:#000000;text-decoration:none;">${esc(phone)}</a>`) : "";
+      const emailRow = email ? contactRow("email", `<a href="mailto:${esc(email)}" style="color:#000000;text-decoration:none;">${esc(email)}</a>`) : "";
+      const webRow = contactRow("web", `<a href="${esc(websiteUrl)}" target="_blank" style="color:#000000;text-decoration:none;">${esc(websiteLabel)}</a>`);
 
       // LinkedIn
       let socialsHtml = "";

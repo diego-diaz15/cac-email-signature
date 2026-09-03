@@ -79,6 +79,8 @@ class SignatureGenerator:
         line1, line2, line3 = _wordmark_lines(self.brand.name)
         mark_size = 72 if template_name == "original" else self.brand.logo.display_width
         mark_height = 72 if template_name == "original" else self.brand.logo.display_height
+        contact_color = "#000000" if template_name == "original" else colors.text
+        link_color = "#000000" if template_name == "original" else colors.link
 
         return {
             "font": font,
@@ -99,9 +101,9 @@ class SignatureGenerator:
             "website_label": website_label,
             "contact_web": website_url,
             "web_icon_cell": self._icon_cell("web", image_mode) if website_url else "",
-            "phone_row": self._phone_row(person, font, colors.text, image_mode),
-            "email_row": self._email_row(person, font, colors.link, image_mode),
-            "web_row": self._web_row(website_url, website_label, font, colors.link, image_mode),
+            "phone_row": self._phone_row(person, font, contact_color, image_mode),
+            "email_row": self._email_row(person, font, link_color, image_mode),
+            "web_row": self._web_row(website_url, website_label, font, link_color, image_mode),
             "socials": self._socials_html(person, image_mode),
         }
 
