@@ -1,0 +1,22 @@
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;font-family:{{font}};">
+  <tr>
+    <td valign="top" style="padding:0 12px 0 0;background-color:transparent;">{{logo_block}}</td>
+    <td valign="top" style="font-family:{{font}};">
+      {{#if name}}
+      <div style="font-family:{{font}};font-size:15px;line-height:20px;font-weight:bold;color:{{text}};">{{name}}</div>
+      {{/if}}
+      {{#if title}}
+      <div style="font-family:{{font}};font-size:11px;line-height:15px;color:{{muted}};">{{title}}</div>
+      {{/if}}
+      {{#if company}}
+      <div style="font-family:{{font}};font-size:11px;line-height:15px;color:{{text}};">{{company}}</div>
+      {{/if}}
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;margin-top:6px;">
+        {{phone_row}}
+        {{email_row}}
+        {{web_row}}
+      </table>
+      {{socials}}
+    </td>
+  </tr>
+</table>

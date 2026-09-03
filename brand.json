@@ -1,0 +1,30 @@
+{
+  "name": "Cámara Argentina de Comercio y Servicios",
+  "short_name": "CAC",
+  "website": "https://www.cac.com.ar",
+  "email_domain": "cac.com.ar",
+  "template": "original",
+  "colors": {
+    "primary": "#008ACB",
+    "secondary": "#1E4B8E",
+    "text": "#1A1A1A",
+    "muted": "#5C5F66",
+    "divider": "#C3C8CE",
+    "link": "#1E4B8E"
+  },
+  "logo": {
+    "source": "assets/brand/logo-source.png",
+    "animated": "assets/brand/logo-animated.gif",
+    "static": "assets/brand/logo.png",
+    "public_url": "https://cdn.jsdelivr.net/gh/diego-diaz15/cac-email-signature@9acbf18/logo-animated.gif",
+    "display_width": 140,
+    "display_height": 140
+  },
+  "animation": {
+    "max_angle": 0.0,
+    "fps": 10,
+    "motion_frames": 20,
+    "pause_frames": 28,
+    "output_size": 380
+  }
+}

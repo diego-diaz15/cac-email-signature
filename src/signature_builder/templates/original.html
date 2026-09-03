@@ -1,0 +1,41 @@
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;border-spacing:0;mso-table-lspace:0pt;mso-table-rspace:0pt;font-family:{{font}};">
+  <tr>
+    <td valign="middle" style="padding:2px 20px 2px 0;font-family:{{font}};">
+      {{#if name}}
+      <div style="font-family:{{font}};font-size:15px;line-height:20px;font-weight:bold;color:{{text}};">{{name}}</div>
+      {{/if}}
+      {{#if title}}
+      <div style="font-family:{{font}};font-size:15px;line-height:20px;font-weight:bold;color:{{text}};padding-top:1px;">{{title}}</div>
+      {{/if}}
+      {{#if department}}
+      <div style="font-family:{{font}};font-size:12px;line-height:16px;color:{{muted}};">{{department}}</div>
+      {{/if}}
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;margin-top:10px;font-family:{{font}};">
+        {{phone_row}}
+        {{email_row}}
+        {{web_row}}
+      </table>
+      {{socials}}
+    </td>
+    <td width="1" bgcolor="{{divider}}" style="width:1px;background-color:{{divider}};font-size:1px;line-height:1px;">&nbsp;</td>
+    <td width="20" style="width:20px;font-size:0;line-height:0;">&nbsp;</td>
+    <td valign="middle" style="padding:0;background-color:transparent;">
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
+        <tr>
+          <td valign="middle" style="padding:0 12px 0 0;background-color:transparent;">{{logo_block}}</td>
+          <td valign="middle" style="font-family:{{font}};white-space:nowrap;">
+            {{#if company_line1}}
+            <div style="font-family:{{font}};font-size:18px;line-height:22px;font-weight:bold;color:{{text}};white-space:nowrap;">{{company_line1}}</div>
+            {{/if}}
+            {{#if company_line2}}
+            <div style="font-family:{{font}};font-size:18px;line-height:22px;font-weight:bold;color:{{text}};white-space:nowrap;">{{company_line2}}</div>
+            {{/if}}
+            {{#if company_line3}}
+            <div style="font-family:{{font}};font-size:18px;line-height:22px;font-weight:bold;color:{{text}};white-space:nowrap;">{{company_line3}}</div>
+            {{/if}}
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>

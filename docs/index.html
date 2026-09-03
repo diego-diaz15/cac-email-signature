@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Generador de Firma · CAC</title>
+  <style>
+    :root {
+      --ink: #0b1628;
+      --panel: #121e32;
+      --line: #24344c;
+      --cyan: #008acb;
+      --deep: #1e4b8e;
+      --paper: #d9e1ea;
+      --card: #ffffff;
+      --text: #f4f7fb;
+      --mute: #8a97ab;
+      --label: #a8b3c7;
+      --radius: 8px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--ink);
+      color: var(--text);
+      font-family: "Segoe UI Variable", "Segoe UI", Calibri, "Helvetica Neue", sans-serif;
+    }
+
+    .shell {
+      display: grid;
+      grid-template-columns: minmax(280px, 360px) minmax(0, 1fr);
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      background: var(--panel);
+      border-right: 1px solid var(--line);
+      padding: 28px 24px 32px;
+    }
+
+    .brand h1 {
+      margin: 4px 0 8px;
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+    }
+
+    .eyebrow {
+      margin: 0;
+      color: var(--cyan);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .lede {
+      margin: 0 0 8px;
+      color: var(--mute);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .section {
+      margin: 18px 0 2px;
+      color: var(--cyan);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.1px;
+      text-transform: uppercase;
+    }
+
+    label {
+      display: grid;
+      gap: 5px;
+      color: var(--label);
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+
+    input {
+      width: 100%;
+      background: #0b1220;
+      color: var(--text);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 8px 10px;
+      font: inherit;
+      font-size: 13px;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--cyan);
+    }
+
+    .email-row { display: flex; }
+    .email-row input {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+    .email-suffix {
+      flex: 0 0 118px;
+      display: grid;
+      place-items: center;
+      background: #152033;
+      color: var(--mute);
+      font-size: 13px;
+      font-weight: 600;
+      border: 1px solid var(--line);
+      border-left: none;
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+
+    .stage {
+      display: flex;
+      flex-direction: column;
+      background: var(--paper);
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='84' height='96' viewBox='0 0 84 96'><path fill='none' stroke='%231e4b8e' stroke-opacity='0.11' stroke-width='1' d='M42 4 80 26v44L42 92 4 70V26z'/></svg>");
+      min-height: 100vh;
+    }
+
+    .canvas { flex: 1; padding: 28px 32px 12px; }
+
+    .caption { margin: 0 0 10px; color: #4a5a70; font-size: 12px; }
+
+    .letter {
+      background: var(--card);
+      border-radius: 12px;
+      min-height: 200px;
+      padding: 24px;
+      box-shadow: 0 18px 40px rgba(14, 23, 38, 0.12);
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 0 32px 8px;
+    }
+
+    button {
+      border: none;
+      border-radius: var(--radius);
+      padding: 10px 16px;
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    button:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+
+    .primary { background: var(--cyan); color: #fff; }
+    .primary:hover { background: #0a9ee0; }
+
+    .ghost {
+      background: #e8eef4;
+      color: #1e2a40;
+      border: 1px solid #9aabc0;
+    }
+
+    .status {
+      margin: 0;
+      padding: 0 32px 24px;
+      color: #4a5a70;
+      font-size: 12px;
+    }
+
+    @media (max-width: 860px) {
+      .shell { grid-template-columns: 1fr; }
+      .sidebar { border-right: 0; border-bottom: 1px solid var(--line); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar" aria-label="Datos de la firma">
+      <header class="brand">
+        <p class="eyebrow">Cámara Argentina de Comercio y Servicios</p>
+        <h1>Generador de Firma</h1>
+        <p class="lede">Completá tus datos. El dominio y el logo ya están listos.</p>
+      </header>
+
+      <form id="form" autocomplete="on">
+        <p class="section">Información personal</p>
+        <label>Nombre
+          <input name="first_name" type="text" autocomplete="given-name">
+        </label>
+        <label>Apellido
+          <input name="last_name" type="text" autocomplete="family-name">
+        </label>
+        <label>Cargo
+          <input name="title" type="text">
+        </label>
+        <label>Departamento
+          <input name="department" type="text">
+        </label>
+
+        <p class="section">Contacto</p>
+        <label>Teléfono
+          <input name="phone" type="tel" autocomplete="tel">
+        </label>
+        <label>Email
+          <span class="email-row">
+            <input name="email_local" type="text" spellcheck="false" inputmode="email">
+            <span class="email-suffix">@cac.com.ar</span>
+          </span>
+        </label>
+        <label>LinkedIn (opcional)
+          <input name="linkedin" type="url" autocomplete="url" placeholder="https://linkedin.com/in/...">
+        </label>
+      </form>
+    </aside>
+
+    <main class="stage">
+      <div class="canvas">
+        <p class="caption">Vista previa</p>
+        <div class="letter" id="preview-box"></div>
+      </div>
+      <div class="actions">
+        <button type="button" class="primary" id="copy">Copiar firma</button>
+        <button type="button" class="ghost" id="export-html">Descargar HTML</button>
+      </div>
+      <p class="status" id="status" role="status" aria-live="polite">Completá tus datos y pulsá Copiar firma.</p>
+    </main>
+  </div>
+
+  <script>
+    // ─── Constantes de marca ────────────────────────────────────────────────
+    const BRAND = {
+      name: "Cámara Argentina de Comercio y Servicios",
+      shortName: "CAC",
+      emailDomain: "cac.com.ar",
+      website: "https://www.cac.com.ar",
+      logoUrl: "https://cdn.jsdelivr.net/gh/diego-diaz15/cac-email-signature@9acbf18/logo-animated.gif",
+      colors: {
+        text: "#1A1A1A",
+        muted: "#5C5F66",
+        link: "#1E4B8E",
+        divider: "#C3C8CE",
+      },
+      font: "Arial, Helvetica, sans-serif",
+    };
+
+    // ─── Iconos (data URIs) ─────────────────────────────────────────────────
+    // Iconos dibujados con Canvas y convertidos a data URI para que funcionen
+    // sin servidor ni archivos externos.
+    function makeIconDataUri(drawFn) {
+      const c = document.createElement("canvas");
+      c.width = 32; c.height = 32;
+      const ctx = c.getContext("2d");
+      ctx.strokeStyle = "#1E4B8E";
+      ctx.fillStyle = "#1E4B8E";
+      ctx.lineWidth = 2;
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      drawFn(ctx);
+      return c.toDataURL("image/png");
+    }
+
+    const ICONS = {
+      phone: makeIconDataUri((ctx) => {
+        ctx.beginPath();
+        ctx.roundRect(10, 2, 12, 28, 3);
+        ctx.stroke();
+        ctx.fillRect(13, 5, 6, 2);
+      }),
+      email: makeIconDataUri((ctx) => {
+        ctx.beginPath();
+        ctx.roundRect(4, 8, 24, 16, 2);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(4, 10); ctx.lineTo(16, 18); ctx.lineTo(28, 10);
+        ctx.stroke();
+      }),
+      web: makeIconDataUri((ctx) => {
+        ctx.beginPath();
+        ctx.arc(16, 16, 11, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(16, 16, 11, 0, Math.PI * 2);
+        ctx.save();
+        ctx.scale(0.5, 1);
+        ctx.arc(32, 16, 11, 0, Math.PI * 2);
+        ctx.restore();
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(5, 16); ctx.lineTo(27, 16);
+        ctx.stroke();
+      }),
+      linkedin: makeIconDataUri((ctx) => {
+        ctx.fillStyle = "#1E4B8E";
+        ctx.beginPath();
+        ctx.roundRect(4, 4, 24, 24, 4);
+        ctx.fill();
+        ctx.fillStyle = "#fff";
+        ctx.fillRect(8, 13, 4, 11);
+        ctx.beginPath();
+        ctx.arc(10, 10, 2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillRect(15, 13, 4, 11);
+        ctx.beginPath();
+        ctx.arc(19, 18, 4, Math.PI * 1.5, Math.PI * 0.5);
+        ctx.fill();
+        ctx.fillStyle = "#1E4B8E";
+        ctx.fillRect(19, 18, 4, 6);
+      }),
+    };
+
+    // ─── Generador de firma ─────────────────────────────────────────────────
+    function esc(s) {
+      return String(s || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    function tel(s) {
+      const d = s.replace(/[^\d+]/g, "");
+      return d.replace(/\D/g, "").length >= 6 ? "tel:" + d : "";
+    }
+
+    function httpUrl(s) {
+      if (!s) return "";
+      if (/^(javascript|data|vbscript|file):/i.test(s)) return "";
+      if (!/^https?:\/\//i.test(s)) s = "https://" + s.replace(/^\/\//, "");
+      try { new URL(s); return s; } catch { return ""; }
+    }
+
+    function icon(name, size = 14) {
+      const src = ICONS[name];
+      if (!src) return "";
+      return `<img src="${src}" width="${size}" height="${size}" alt="" style="display:block;border:0;outline:none;text-decoration:none;background-color:transparent;" />`;
+    }
+
+    function contactRow(iconName, inner) {
+      if (!inner) return "";
+      const IMG_STYLE = "display:block;border:0;outline:none;text-decoration:none;background-color:transparent;";
+      return `<tr>
+  <td valign="middle" width="18" style="padding:0 6px 4px 0;">${icon(iconName)}</td>
+  <td valign="middle" style="padding:0 0 4px 0;font-family:${BRAND.font};font-size:12px;line-height:16px;">${inner}</td>
+</tr>`;
+    }
+
+    function buildFragment(data) {
+      const { firstName, lastName, title, department, phone, emailLocal, linkedin } = data;
+      const name = [firstName, lastName].filter(Boolean).join(" ");
+      const email = emailLocal ? emailLocal.split("@")[0].replace(/[^a-zA-Z0-9._+-]/g, "") + "@" + BRAND.emailDomain : "";
+      const websiteUrl = BRAND.website;
+      const websiteLabel = "cac.com.ar";
+      const C = BRAND.colors;
+      const F = BRAND.font;
+
+      // Nombre
+      const nameDiv = name ? `<div style="font-family:${F};font-size:15px;line-height:20px;font-weight:bold;color:${C.text};">${esc(name)}</div>` : "";
+      // Cargo
+      const titleDiv = title ? `<div style="font-family:${F};font-size:15px;line-height:20px;font-weight:bold;color:${C.text};padding-top:1px;">${esc(title)}</div>` : "";
+      // Departamento
+      const deptDiv = department ? `<div style="font-family:${F};font-size:12px;line-height:16px;color:${C.muted};">${esc(department)}</div>` : "";
+
+      // Filas de contacto
+      const phoneRow = phone ? contactRow("phone", `<a href="${esc(tel(phone))}" style="color:${C.text};text-decoration:none;">${esc(phone)}</a>`) : "";
+      const emailRow = email ? contactRow("email", `<a href="mailto:${esc(email)}" style="color:${C.link};text-decoration:none;">${esc(email)}</a>`) : "";
+      const webRow = contactRow("web", `<a href="${esc(websiteUrl)}" target="_blank" style="color:${C.link};text-decoration:none;">${esc(websiteLabel)}</a>`);
+
+      // LinkedIn
+      let socialsHtml = "";
+      const liUrl = httpUrl(linkedin);
+      if (liUrl) {
+        socialsHtml = `<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;margin-top:8px;"><tr>
+  <td style="padding:0 8px 0 0;">
+    <a href="${esc(liUrl)}" target="_blank" style="text-decoration:none;">
+      <img src="${ICONS.linkedin}" width="16" height="16" alt="LinkedIn" style="display:block;border:0;outline:none;text-decoration:none;background-color:transparent;" />
+    </a>
+  </td>
+</tr></table>`;
+      }
+
+      // Logo
+      const logoImg = `<a href="${esc(websiteUrl)}" target="_blank" style="text-decoration:none;border:0;background-color:transparent;"><img src="${esc(BRAND.logoUrl)}" width="72" height="72" alt="${esc(BRAND.shortName)}" style="display:block;border:0;outline:none;text-decoration:none;background-color:transparent;" /></a>`;
+
+      // Wordmark
+      const wm = (t, extra = "") => `<div style="font-family:${F};font-size:18px;line-height:22px;font-weight:bold;color:${C.text};white-space:nowrap;${extra}">${esc(t)}</div>`;
+
+      return `<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;border-spacing:0;mso-table-lspace:0pt;mso-table-rspace:0pt;font-family:${F};">
+  <tr>
+    <td valign="middle" style="padding:2px 20px 2px 0;font-family:${F};">
+      ${nameDiv}
+      ${titleDiv}
+      ${deptDiv}
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;margin-top:10px;font-family:${F};">
+        ${phoneRow}
+        ${emailRow}
+        ${webRow}
+      </table>
+      ${socialsHtml}
+    </td>
+    <td width="1" bgcolor="${C.divider}" style="width:1px;background-color:${C.divider};font-size:1px;line-height:1px;">&nbsp;</td>
+    <td width="20" style="width:20px;font-size:0;line-height:0;">&nbsp;</td>
+    <td valign="middle" style="padding:0;background-color:transparent;">
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
+        <tr>
+          <td valign="middle" style="padding:0 12px 0 0;background-color:transparent;">${logoImg}</td>
+          <td valign="middle" style="font-family:${F};white-space:nowrap;">
+            ${wm("Cámara")}
+            ${wm("Argentina de")}
+            ${wm("Comercio y Servicios")}
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>`;
+    }
+
+    function formData() {
+      const f = document.getElementById("form");
+      return {
+        firstName: f.first_name.value.trim(),
+        lastName: f.last_name.value.trim(),
+        title: f.title.value.trim(),
+        department: f.department.value.trim(),
+        phone: f.phone.value.trim(),
+        emailLocal: f.email_local.value.trim(),
+        linkedin: f.linkedin.value.trim(),
+      };
+    }
+
+    // ─── Render en vivo ─────────────────────────────────────────────────────
+    function refresh() {
+      const html = buildFragment(formData());
+      document.getElementById("preview-box").innerHTML = html;
+    }
+
+    document.getElementById("form").addEventListener("input", refresh);
+    refresh();
+
+    // ─── Copiar firma ───────────────────────────────────────────────────────
+    function setStatus(msg) {
+      document.getElementById("status").textContent = msg;
+    }
+
+    async function copySignature() {
+      const html = buildFragment(formData());
+      const plain = (() => {
+        const d = formData();
+        const name = [d.firstName, d.lastName].filter(Boolean).join(" ");
+        const email = d.emailLocal ? d.emailLocal.split("@")[0] + "@" + BRAND.emailDomain : "";
+        return [name, d.title, d.department, BRAND.name, d.phone, email, "cac.com.ar"]
+          .filter(Boolean).join("\n");
+      })();
+
+      try {
+        await navigator.clipboard.write([
+          new ClipboardItem({
+            "text/html": new Blob([html], { type: "text/html" }),
+            "text/plain": new Blob([plain], { type: "text/plain" }),
+          }),
+        ]);
+        setStatus("✓ Firma copiada. Pegala en Gmail con Ctrl+V.");
+        return;
+      } catch { /* fallback */ }
+
+      // Fallback para navegadores que no soportan clipboard.write
+      const div = document.createElement("div");
+      div.setAttribute("contenteditable", "true");
+      div.style.cssText = "position:fixed;left:-9999px;top:0;";
+      div.innerHTML = html;
+      document.body.appendChild(div);
+      const range = document.createRange();
+      range.selectNodeContents(div);
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+      const ok = document.execCommand("copy");
+      sel.removeAllRanges();
+      div.remove();
+      setStatus(ok ? "✓ Firma copiada. Pegala en Gmail con Ctrl+V." : "No se pudo copiar automáticamente. Seleccioná la firma de la vista previa y copiá con Ctrl+C.");
+    }
+
+    document.getElementById("copy").addEventListener("click", () => {
+      copySignature().catch(() => setStatus("Error al copiar. Intentá desde Chrome."));
+    });
+
+    // ─── Descargar HTML ─────────────────────────────────────────────────────
+    document.getElementById("export-html").addEventListener("click", () => {
+      const fragment = buildFragment(formData());
+      const doc = `<!DOCTYPE html>
+<html lang="es">
+<head><meta charset="utf-8"><title>Firma</title></head>
+<body style="margin:0;padding:24px;background:#ffffff;">
+${fragment}
+</body>
+</html>`;
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(new Blob([doc], { type: "text/html" }));
+      a.download = "firma.html";
+      a.click();
+      URL.revokeObjectURL(a.href);
+      setStatus("Se descargó firma.html.");
+    });
+  </script>
+</body>
+</html>

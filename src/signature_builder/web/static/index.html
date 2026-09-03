@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Signature Builder · CAC</title>
+  <link rel="stylesheet" href="/static/app.css?v=4">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar" aria-label="Datos de la firma">
+      <header class="brand">
+        <p class="eyebrow">Cámara Argentina de Comercio y Servicios</p>
+        <h1>Signature Builder</h1>
+        <p class="lede">Completá tus datos. El dominio y el logo ya están listos.</p>
+      </header>
+
+      <form id="form" autocomplete="on">
+        <input type="hidden" name="template" value="original">
+
+        <p class="section">Información personal</p>
+        <label>Nombre
+          <input name="first_name" type="text" autocomplete="given-name">
+        </label>
+        <label>Apellido
+          <input name="last_name" type="text" autocomplete="family-name">
+        </label>
+        <label>Cargo
+          <input name="title" type="text">
+        </label>
+        <label>Departamento
+          <input name="department" type="text">
+        </label>
+
+        <p class="section">Contacto</p>
+        <label>Teléfono
+          <input name="phone" type="tel" autocomplete="tel">
+        </label>
+        <label>Email
+          <span class="email-row">
+            <input name="email_local" type="text" spellcheck="false" inputmode="email">
+            <span class="email-suffix" id="email-suffix">@cac.com.ar</span>
+          </span>
+        </label>
+        <label>Web
+          <input name="website" type="text" autocomplete="url">
+        </label>
+        <label>LinkedIn
+          <input name="linkedin" type="url" autocomplete="url">
+        </label>
+      </form>
+    </aside>
+
+    <main class="stage">
+      <div class="canvas">
+        <p class="caption">Vista previa</p>
+        <div class="letter">
+          <iframe id="preview" title="Vista previa de la firma" sandbox="allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
+        </div>
+      </div>
+      <div class="actions">
+        <button type="button" class="primary" id="copy">Copiar firma</button>
+        <button type="button" class="secondary" id="open-tab">Ver en el navegador</button>
+        <button type="button" class="ghost" id="export-html">Exportar HTML</button>
+        <button type="button" class="ghost" id="export-zip">Exportar ZIP</button>
+      </div>
+      <p class="status" id="status" role="status" aria-live="polite">Completá tus datos y pulsá Copiar firma.</p>
+    </main>
+  </div>
+  <script src="/static/app.js?v=4"></script>
+</body>
+</html>

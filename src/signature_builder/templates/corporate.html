@@ -1,0 +1,28 @@
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;border-spacing:0;mso-table-lspace:0pt;mso-table-rspace:0pt;font-family:{{font}};">
+  <tr>
+    <td valign="middle" style="padding:0 4px 0 0;background-color:transparent;">{{logo_block}}</td>
+    <td width="14" style="width:14px;font-size:0;line-height:0;">&nbsp;</td>
+    <td width="1" bgcolor="{{divider}}" style="width:1px;background-color:{{divider}};font-size:1px;line-height:1px;">&nbsp;</td>
+    <td width="18" style="width:18px;font-size:0;line-height:0;">&nbsp;</td>
+    <td valign="middle" style="padding:2px 0;font-family:{{font}};">
+      {{#if name}}
+      <div style="font-family:{{font}};font-size:17px;line-height:22px;font-weight:bold;color:{{text}};">{{name}}</div>
+      {{/if}}
+      {{#if title}}
+      <div style="font-family:{{font}};font-size:12px;line-height:16px;color:{{muted}};padding-top:1px;">{{title}}</div>
+      {{/if}}
+      {{#if department}}
+      <div style="font-family:{{font}};font-size:12px;line-height:16px;color:{{muted}};">{{department}}</div>
+      {{/if}}
+      {{#if company}}
+      <div style="font-family:{{font}};font-size:12px;line-height:16px;color:{{text}};font-weight:bold;padding-top:2px;">{{company}}</div>
+      {{/if}}
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;margin-top:8px;font-family:{{font}};">
+        {{phone_row}}
+        {{email_row}}
+        {{web_row}}
+      </table>
+      {{socials}}
+    </td>
+  </tr>
+</table>
